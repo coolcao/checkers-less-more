@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 import { Cell } from "./checkers-less-more.types";
 
 @Injectable({
@@ -13,6 +13,68 @@ export class Store {
 
   readonly size = this._size.asReadonly();
   readonly board = this._board.asReadonly();
+  // 记录每个位置实体棋子是否可以跳跃
+  readonly canJump = computed(() => {
+    const canJump: boolean[][] = new Array(this._size()).fill(null).map(() => new Array(this._size()).fill(false));
+    const board = this._board();
+    for (let i = 0; i < this._size(); i++) {
+      for (let j = 0; j < this._size(); j++) {
+        const cell = board[i][j];
+        if (cell.empty || cell.virtual) {
+          continue;
+        }
+
+        // 上方
+        const up = i >= 2 &&
+          !board[i - 2][j].virtual && board[i - 2][j].empty && // 距离2的位置是空白非虚拟格子
+          !board[i - 1][j].virtual && !board[i - 1][j].empty;  // 距离1的位置是非空非虚拟格子
+
+        // 下方
+        const down = i <= this._size() - 3 &&
+          !board[i + 2][j].virtual && board[i + 2][j].empty &&
+          !board[i + 1][j].virtual && !board[i + 1][j].empty;
+
+        // 左侧
+        const left = j >= 2 &&
+          !board[i][j - 2].virtual && board[i][j - 2].empty &&
+          !board[i][j - 1].virtual && !board[i][j - 1].empty;
+
+        // 右侧
+        const right = j <= this._size() - 3 &&
+          !board[i][j + 2].virtual && board[i][j + 2].empty &&
+          !board[i][j + 1].virtual && !board[i][j + 1].empty;
+
+        const result = up || down || left || right;
+        canJump[i][j] = result;
+      }
+    }
+    return canJump;
+  });
+  // 当所有位置的棋子都不能跳跃时，游戏结束
+  readonly isComplete = computed(() => {
+    const canJump = this.canJump();
+    for (let i = 0; i < this._size(); i++) {
+      for (let j = 0; j < this._size(); j++) {
+        if (canJump[i][j]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  });
+  // 统计还剩实体棋子的数量
+  readonly remain = computed(() => {
+    let count = 0;
+    const board = this._board();
+    for (let i = 0; i < this._size(); i++) {
+      for (let j = 0; j < this._size(); j++) {
+        if (!board[i][j].virtual && !board[i][j].empty) {
+          count++;
+        }
+      }
+    }
+    return count;
+  });
 
 
   initBoard(size?: number, virtualSize?: number) {

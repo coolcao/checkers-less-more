@@ -1,8 +1,8 @@
 <div
-  class="flex h-screen w-screen flex-col items-center justify-center bg-gray-200 select-none"
+  class="flex h-screen w-screen flex-col items-center justify-center bg-gray-200 select-none dark:bg-gray-800"
 >
   <div
-    class="flex h-[680px] w-[960px] flex-col items-center justify-center rounded-md bg-blue-50"
+    class="flex h-[680px] w-[960px] flex-col items-center justify-center rounded-md bg-blue-50 dark:bg-gray-700"
   >
     @for (rows of board(); track $index; let row = $index) {
       <div class="flex w-fit items-center justify-center">
@@ -13,14 +13,18 @@
               (click)="clickCell(item)"
               class="mx-2 my-2 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full"
               [ngClass]="{
-                'bg-gradient-to-br from-amber-600 via-purple-600 to-pink-600 shadow-[inset_0_-10px_30px_#ffffff33,0_20px_40px_#0000004d]':
+                'bg-gradient-to-br from-stone-500 via-slate-500 to-slate-600 dark:from-stone-400 dark:via-slate-400 dark:to-slate-500':
                   !item.empty && !item.virtual,
-                'border border-dashed': item.empty && !item.virtual,
-                '!from-amber-400 !via-purple-400 !to-pink-400': item.clicked,
+                'border border-dashed border-gray-800 dark:border-gray-200':
+                  item.empty && !item.virtual,
+                '!from-stone-400 !via-slate-400 !to-slate-500 dark:!from-stone-300 dark:!via-slate-300 dark:!to-slate-400':
+                  item.clicked,
               }"
             >
               @if (canJumpArr()[row][col]) {
-                <div class="h-1 w-1 rounded-full bg-green-300"></div>
+                <div
+                  class="h-2 w-2 rounded-full bg-green-300 dark:bg-green-500"
+                ></div>
               }
             </div>
           }

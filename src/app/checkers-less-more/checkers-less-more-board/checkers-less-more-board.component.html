@@ -31,8 +31,14 @@
         }
       </div>
     }
-    <div class="mt-5 flex w-full items-center justify-center">
-      剩余棋子： {{ remain() }}
+    <div
+      class="mt-5 flex w-full items-center justify-center text-gray-600 dark:text-gray-200"
+    >
+      @if (isComplete()) {
+        <div class="text-2xl">游戏结束，最终剩余棋子： {{ remain() }}</div>
+      } @else {
+        <div class="text-2xl">剩余棋子： {{ remain() }}</div>
+      }
     </div>
   </div>
 </div>

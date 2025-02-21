@@ -16,6 +16,7 @@ export class CheckersLessMoreBoardComponent implements OnInit {
   board = this.store.board;
   canJumpArr = this.store.canJump;
   remain = this.store.remain;
+  isComplete = this.store.isComplete;
 
   // 记录点击格子的坐标
   clickedCell: Cell | null = null;
@@ -74,6 +75,9 @@ export class CheckersLessMoreBoardComponent implements OnInit {
   }
 
   clickCell(cell: Cell) {
+    if (this.isComplete()) {
+      return;
+    }
     // 如果是虚拟格子，不做任何操作
     if (cell.virtual) {
       return;

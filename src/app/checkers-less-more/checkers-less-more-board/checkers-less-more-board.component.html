@@ -1,0 +1,22 @@
+<div class="flex h-screen w-screen items-center justify-center">
+  <div
+    class="flex h-[680px] w-[960px] flex-col items-center justify-center rounded-md bg-gray-300"
+  >
+    @for (rows of board(); track $index) {
+      <div class="flex w-fit items-center justify-center">
+        @for (item of rows; track $index) {
+          <div
+            (click)="clickCell(item)"
+            class="mx-2 my-2 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full"
+            [ngClass]="{
+              'bg-gradient-to-br from-amber-500 via-purple-500 to-pink-500 shadow-[inset_0_-10px_30px_#ffffff33,0_20px_40px_#0000004d]':
+                !item.empty && !item.virtual,
+              'border border-dashed': item.empty && !item.virtual,
+              'from-amber-700 via-purple-700 to-pink-700': item.clicked,
+            }"
+          ></div>
+        }
+      </div>
+    }
+  </div>
+</div>

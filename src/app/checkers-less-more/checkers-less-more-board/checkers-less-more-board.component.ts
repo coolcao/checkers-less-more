@@ -102,6 +102,10 @@ export class CheckersLessMoreBoardComponent implements OnInit {
 
       return;
     }
+    // 只可点击可以跳跃的棋子
+    if (!this.canJumpArr()[cell.x][cell.y]) {
+      return;
+    }
 
     this.clickedCell = cell;
 

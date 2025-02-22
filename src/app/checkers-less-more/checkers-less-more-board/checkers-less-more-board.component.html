@@ -1,70 +1,74 @@
 <div
-  class="flex h-screen w-screen flex-col items-center justify-center bg-gray-200 select-none dark:bg-gray-800"
+  class="flex h-screen w-screen flex-col items-center justify-center bg-gray-200 px-5 select-none dark:bg-gray-800"
 >
   <div
-    class="my-5 flex w-full items-center justify-center text-3xl text-gray-600 dark:text-gray-300"
+    class="sm:h-[480px] sm:w-[680px] md:h-[680px] md:w-[960px] lg:h-[680px] lg:w-[960px] xl:h-[780px] xl:w-[1060px] 2xl:h-[980px] 2xl:w-[1200px]"
   >
-    中国跳棋
-  </div>
-  <div
-    class="my-5 flex w-full flex-col items-center justify-center text-gray-400 dark:text-gray-400"
-  >
-    <div class="text-md w-[960px]">游戏玩法：</div>
-    <div class="ml-5 w-[960px] text-base">
-      1.
-      每一步能选择棋盘上的一个棋子，该棋子旁边应该有另一个棋子(所谓"邻居”)。选棋子之后，其能跳上'邻居"并到靠近的空格，而且"邻居”会从棋盘上取消
+    <div
+      class="flex w-full items-center justify-center py-5 text-3xl text-gray-600 dark:text-gray-300"
+    >
+      中国跳棋
     </div>
-    <div class="ml-5 w-[960px] text-base">
-      2.
-      每一步首先要点击在所选棋子上，然后点击空格(目的地)。若棋子移动有效，则'邻居"将自动被取消。
+    <div
+      class="flex w-full flex-col items-start justify-center py-5 text-gray-400 dark:text-gray-400"
+    >
+      <div class="text-md">游戏玩法：</div>
+      <div class="pl-5 text-base">
+        1.
+        每一步能选择棋盘上的一个棋子，该棋子旁边应该有另一个棋子(所谓"邻居”)。选棋子之后，其能跳上'邻居"并到靠近的空格，而且"邻居”会从棋盘上取消
+      </div>
+      <div class="pl-5 text-base">
+        2.
+        每一步首先要点击在所选棋子上，然后点击空格(目的地)。若棋子移动有效，则'邻居"将自动被取消。
+      </div>
+      <div class="pl-5 text-base">
+        3. 当棋盘上棋子没有任何一个可以跳跃的棋子时，游戏结束。
+      </div>
+      <div class="pl-5 text-base">
+        4. 尽可能的使得游戏结束时，棋盘上留有最少的棋子。
+      </div>
     </div>
-    <div class="ml-5 w-[960px] text-base">
-      3. 当棋盘上棋子没有任何一个可以跳跃的棋子时，游戏结束。
-    </div>
-    <div class="ml-5 w-[960px] text-base">
-      4. 尽可能的使得游戏结束时，棋盘上留有最少的棋子。
-    </div>
-  </div>
-  <div
-    class="flex h-[680px] w-[960px] flex-col items-center justify-center rounded-md bg-blue-50 dark:bg-gray-700"
-  >
-    @for (rows of board(); track $index; let row = $index) {
-      <div class="flex w-fit items-center justify-center">
-        @for (item of rows; track $index; let col = $index) {
-          @if (item.virtual) {
-          } @else {
-            <div
-              (click)="clickCell(item)"
-              class="mx-2 my-2 flex h-16 w-16 items-center justify-center rounded-full"
-              [ngClass]="{
-                'bg-gradient-to-br from-stone-500 via-slate-500 to-slate-600 dark:from-stone-400 dark:via-slate-400 dark:to-slate-500':
-                  !item.empty && !item.virtual,
-                'border border-dashed border-gray-800 dark:border-gray-200':
-                  item.empty && !item.virtual,
-                '!from-stone-400 !via-slate-400 !to-slate-500 dark:!from-stone-300 dark:!via-slate-300 dark:!to-slate-400':
-                  item.clicked,
-                'cursor-pointer hover:scale-105':
-                  canJumpArr()[row][col] || item.empty,
-              }"
-            >
-              @if (canJumpArr()[row][col]) {
-                <div
-                  class="h-2 w-2 rounded-full bg-yellow-300 dark:bg-yellow-800"
-                ></div>
-              }
-            </div>
+    <div
+      class="flex flex-col items-center justify-center rounded-md bg-blue-50 p-10 dark:bg-gray-700"
+    >
+      @for (rows of board(); track $index; let row = $index) {
+        <div class="flex w-fit items-center justify-center">
+          @for (item of rows; track $index; let col = $index) {
+            @if (item.virtual) {
+            } @else {
+              <div
+                (click)="clickCell(item)"
+                class="m-[2px] flex items-center justify-center rounded-full px-2 py-2 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-10 lg:w-10 xl:h-12 xl:w-12 2xl:h-14 2xl:w-14"
+                [ngClass]="{
+                  'bg-gradient-to-br from-stone-500 via-slate-500 to-slate-600 dark:from-stone-400 dark:via-slate-400 dark:to-slate-500':
+                    !item.empty && !item.virtual,
+                  'border border-dashed border-gray-800 dark:border-gray-200':
+                    item.empty && !item.virtual,
+                  '!from-stone-400 !via-slate-400 !to-slate-500 dark:!from-stone-300 dark:!via-slate-300 dark:!to-slate-400':
+                    item.clicked,
+                  'cursor-pointer hover:scale-105':
+                    canJumpArr()[row][col] || item.empty,
+                }"
+              >
+                @if (canJumpArr()[row][col]) {
+                  <div
+                    class="h-2 w-2 rounded-full bg-yellow-300 dark:bg-yellow-800"
+                  ></div>
+                }
+              </div>
+            }
           }
+        </div>
+      }
+      <div
+        class="mt-5 flex w-full items-center justify-center text-gray-600 dark:text-gray-200"
+      >
+        @if (isComplete()) {
+          <div class="text-2xl">游戏结束，最终剩余棋子： {{ remain() }}</div>
+        } @else {
+          <div class="text-2xl">剩余棋子： {{ remain() }}</div>
         }
       </div>
-    }
-    <div
-      class="mt-5 flex w-full items-center justify-center text-gray-600 dark:text-gray-200"
-    >
-      @if (isComplete()) {
-        <div class="text-2xl">游戏结束，最终剩余棋子： {{ remain() }}</div>
-      } @else {
-        <div class="text-2xl">剩余棋子： {{ remain() }}</div>
-      }
     </div>
   </div>
 </div>

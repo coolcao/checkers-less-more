@@ -1,73 +1,86 @@
 <div
-  class="flex h-screen w-screen flex-col items-center justify-center bg-gray-200 px-5 select-none dark:bg-gray-800"
+  class="flex h-screen w-screen flex-col items-center justify-center bg-[#f0f7f7] px-5 select-none dark:bg-gray-800"
 >
-  <div
-    class="sm:h-[480px] sm:w-[680px] md:h-[680px] md:w-[960px] lg:h-[680px] lg:w-[960px] xl:h-[780px] xl:w-[1060px] 2xl:h-[980px] 2xl:w-[1200px]"
-  >
+  <div class="w-full max-w-[2000px] px-4">
     <div
-      class="flex w-full items-center justify-center py-5 text-3xl text-gray-600 dark:text-gray-300"
+      class="mb-4 flex w-full items-center justify-center py-6 text-3xl font-bold tracking-wide text-[#2A4E6E] md:mb-8 md:text-4xl"
     >
       中国跳棋
     </div>
     <div
-      class="flex w-full flex-col items-start justify-center py-5 text-gray-400 dark:text-gray-400"
+      class="flex h-auto w-full flex-col gap-4 md:gap-8 lg:h-[800px] lg:flex-row"
     >
-      <div class="text-md">游戏玩法：</div>
-      <div class="pl-5 text-base">
-        1.
-        每一步能选择棋盘上的一个棋子，该棋子旁边应该有另一个棋子(所谓"邻居”)。选棋子之后，其能跳上'邻居"并到靠近的空格，而且"邻居”会从棋盘上取消
-      </div>
-      <div class="pl-5 text-base">
-        2.
-        每一步首先要点击在所选棋子上，然后点击空格(目的地)。若棋子移动有效，则'邻居"将自动被取消。
-      </div>
-      <div class="pl-5 text-base">
-        3. 当棋盘上棋子没有任何一个可以跳跃的棋子时，游戏结束。
-      </div>
-      <div class="pl-5 text-base">
-        4. 尽可能的使得游戏结束时，棋盘上留有最少的棋子。
-      </div>
-    </div>
-    <div
-      class="flex flex-col items-center justify-center rounded-md bg-blue-50 p-10 dark:bg-gray-700"
-    >
-      @for (rows of board(); track $index; let row = $index) {
-        <div class="flex w-fit items-center justify-center">
-          @for (item of rows; track $index; let col = $index) {
-            @if (item.virtual) {
-            } @else {
-              <div
-                (click)="clickCell(item)"
-                class="m-[2px] flex items-center justify-center rounded-full px-2 py-2 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-10 lg:w-10 xl:h-12 xl:w-12 2xl:h-14 2xl:w-14"
-                [ngClass]="{
-                  'bg-gradient-to-br from-stone-500 via-slate-500 to-slate-600 dark:from-stone-400 dark:via-slate-400 dark:to-slate-500':
-                    !item.empty && !item.virtual,
-                  'border border-dashed border-gray-800 dark:border-gray-200':
-                    item.empty && !item.virtual,
-                  '!from-stone-400 !via-slate-400 !to-slate-500 dark:!from-stone-300 dark:!via-slate-300 dark:!to-slate-400':
-                    item.clicked,
-                  'cursor-pointer hover:scale-105':
-                    canJumpArr()[row][col] || item.empty,
-                }"
-              >
-                @if (canJumpArr()[row][col]) {
-                  <div
-                    class="h-2 w-2 rounded-full bg-yellow-300 dark:bg-yellow-800"
-                  ></div>
-                }
-              </div>
-            }
-          }
-        </div>
-      }
+      <!-- 游戏棋盘（移动端优先显示在上方） -->
       <div
-        class="mt-5 flex w-full items-center justify-center text-gray-600 dark:text-gray-200"
+        class="hover:shadow-3xl order-1 flex w-full flex-col items-center justify-center rounded-2xl bg-white p-6 shadow-2xl transition-all duration-300 md:p-12 lg:order-2 lg:w-3/4"
+        style="background: linear-gradient(150deg, #f0f7f7 0%, #ffffff 100%)"
       >
-        @if (isComplete()) {
-          <div class="text-2xl">游戏结束，最终剩余棋子： {{ remain() }}</div>
-        } @else {
-          <div class="text-2xl">剩余棋子： {{ remain() }}</div>
+        @for (rows of board(); track $index; let row = $index) {
+          <div
+            class="my-1 flex w-fit items-center justify-center gap-1 md:my-2 md:gap-2"
+          >
+            @for (item of rows; track $index; let col = $index) {
+              @if (item.virtual) {
+              } @else {
+                <div
+                  (click)="clickCell(item)"
+                  class="flex h-7 w-7 items-center justify-center rounded-full transition-all duration-300 sm:h-9 sm:w-9 md:h-11 md:w-11 lg:h-12 lg:w-12 xl:h-14 xl:w-14 2xl:h-16 2xl:w-16"
+                  [ngClass]="{
+                    'bg-gradient-to-br from-[#4AA8A8] via-[#3E8C8C] to-[#327070] shadow-lg hover:shadow-xl':
+                      !item.empty && !item.virtual,
+                    'border-2 border-dashed border-[#2A4E6E] hover:border-solid hover:bg-[#f0f7f7]':
+                      item.empty && !item.virtual,
+                    'scale-90 !from-[#88C4C4] !via-[#6CA8A8] !to-[#508C8C]':
+                      item.clicked,
+                    'hover:scale-110 hover:shadow-2xl':
+                      canJumpArr()[row][col] || item.empty,
+                  }"
+                >
+                  @if (canJumpArr()[row][col]) {
+                    <div
+                      class="h-2 w-2 rounded-full bg-[#2A4E6E] shadow-inner sm:h-3 sm:w-3"
+                    ></div>
+                  }
+                </div>
+              }
+            }
+          </div>
         }
+        <div class="mt-6 flex w-full items-center justify-center md:mt-12">
+          <div
+            class="rounded-full bg-[#f0f7f7] px-4 py-2 text-lg font-medium text-[#2A4E6E] shadow-md md:px-6 md:py-3 md:text-2xl"
+          >
+            @if (isComplete()) {
+              <span>游戏结束，剩余：</span>
+            } @else {
+              <span>当前剩余：</span>
+            }
+            <span class="ml-2 font-bold text-[#4AA8A8] md:ml-3">{{
+              remain()
+            }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 玩法说明卡片（移动端显示在下方） -->
+      <div
+        class="hover:shadow-3xl order-2 w-full rounded-2xl bg-white p-4 shadow-2xl transition-all duration-300 md:p-6 lg:order-1 lg:w-1/4"
+        style="background: linear-gradient(150deg, #f0f7f7 0%, #ffffff 100%)"
+      >
+        <div class="flex h-full flex-col justify-between">
+          <div class="mb-3 text-lg font-bold text-[#4AA8A8] md:mb-4 md:text-xl">
+            游戏玩法
+          </div>
+          <div
+            class="h-full space-y-3 pt-5 text-sm leading-relaxed text-[#2A4E6E] md:space-y-4 md:text-base"
+          >
+            <div>1. 选择有相邻棋子的棋子进行跳跃</div>
+            <div>2. 点击棋子后选择目标空位完成跳跃</div>
+            <div>3. 被跳跃的相邻棋子会被移除</div>
+            <div>4. 无跳跃可能时游戏结束</div>
+            <div>5. 目标保留最少棋子获胜</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

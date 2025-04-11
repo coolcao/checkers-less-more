@@ -122,4 +122,8 @@ export class CheckersLessMoreBoardComponent implements OnInit {
 
     this.store.updateCells(board);
   }
+
+  resetGame() {
+    this.store.initBoard();
+  }
 }

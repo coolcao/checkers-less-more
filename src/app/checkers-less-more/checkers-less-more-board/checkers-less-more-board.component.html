@@ -28,11 +28,11 @@
                   [ngClass]="{
                     'bg-gradient-to-br from-[#4AA8A8] via-[#3E8C8C] to-[#327070] shadow-lg hover:shadow-xl':
                       !item.empty && !item.virtual,
-                    'border-2 border-dashed border-[#2A4E6E] hover:border-solid hover:bg-[#f0f7f7]':
+                    'cursor-pointer border-2 border-dashed border-[#2A4E6E] hover:border-solid hover:bg-[#f0f7f7]':
                       item.empty && !item.virtual,
                     'scale-90 !from-[#88C4C4] !via-[#6CA8A8] !to-[#508C8C]':
                       item.clicked,
-                    'hover:scale-110 hover:shadow-2xl':
+                    'cursor-pointer hover:scale-110 hover:shadow-2xl':
                       canJumpArr()[row][col] || item.empty,
                   }"
                 >
@@ -80,6 +80,12 @@
             <div>4. 无跳跃可能时游戏结束</div>
             <div>5. 目标保留最少棋子获胜</div>
           </div>
+          <button
+            (click)="resetGame()"
+            class="mt-6 cursor-pointer rounded-full bg-[#4AA8A8] px-6 py-3 text-sm font-medium text-white transition-all hover:bg-[#2A4E6E] hover:shadow-md md:mt-8 md:px-8 md:py-4 md:text-base"
+          >
+            重新开始
+          </button>
         </div>
       </div>
     </div>

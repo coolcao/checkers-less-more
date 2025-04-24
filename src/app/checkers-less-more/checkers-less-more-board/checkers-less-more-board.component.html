@@ -3,7 +3,7 @@
 >
   <div class="w-full max-w-[2000px] px-4">
     <div
-      class="mb-4 flex w-full items-center justify-center py-6 text-3xl font-bold tracking-wide text-[#2A4E6E] md:mb-8 md:text-4xl"
+      class="mb-4 flex w-full items-center justify-center py-6 text-3xl font-bold tracking-wide text-[#2A4E6E] md:mb-8 md:text-4xl dark:text-white"
     >
       中国跳棋
     </div>
@@ -12,8 +12,7 @@
     >
       <!-- 游戏棋盘（移动端优先显示在上方） -->
       <div
-        class="hover:shadow-3xl order-1 flex w-full flex-col items-center justify-center rounded-2xl bg-white p-6 shadow-2xl transition-all duration-300 md:p-12 lg:order-2 lg:w-3/4"
-        style="background: linear-gradient(150deg, #f0f7f7 0%, #ffffff 100%)"
+        class="hover:shadow-3xl order-1 flex w-full flex-col items-center justify-center rounded-2xl bg-white p-6 shadow-2xl transition-all duration-300 md:p-12 lg:order-2 lg:w-3/4 dark:bg-gray-700"
       >
         @for (rows of board(); track $index; let row = $index) {
           <div
@@ -28,7 +27,7 @@
                   [ngClass]="{
                     'bg-gradient-to-br from-[#4AA8A8] via-[#3E8C8C] to-[#327070] shadow-lg hover:shadow-xl':
                       !item.empty && !item.virtual,
-                    'cursor-pointer border-2 border-dashed border-[#2A4E6E] hover:border-solid hover:bg-[#f0f7f7]':
+                    'cursor-pointer border-2 border-dashed border-[#2A4E6E] hover:border-solid hover:bg-[#f0f7f7] dark:border-gray-300 dark:hover:bg-gray-600':
                       item.empty && !item.virtual,
                     'scale-90 !from-[#88C4C4] !via-[#6CA8A8] !to-[#508C8C]':
                       item.clicked,
@@ -38,7 +37,7 @@
                 >
                   @if (canJumpArr()[row][col]) {
                     <div
-                      class="h-2 w-2 rounded-full bg-[#2A4E6E] shadow-inner sm:h-3 sm:w-3"
+                      class="h-2 w-2 rounded-full bg-[#2A4E6E] shadow-inner sm:h-3 sm:w-3 dark:bg-gray-300"
                     ></div>
                   }
                 </div>
@@ -48,31 +47,33 @@
         }
         <div class="mt-6 flex w-full items-center justify-center md:mt-12">
           <div
-            class="rounded-full bg-[#f0f7f7] px-4 py-2 text-lg font-medium text-[#2A4E6E] shadow-md md:px-6 md:py-3 md:text-2xl"
+            class="rounded-full bg-[#f0f7f7] px-4 py-2 text-lg font-medium text-[#2A4E6E] shadow-md md:px-6 md:py-3 md:text-2xl dark:bg-gray-600 dark:text-white"
           >
             @if (isComplete()) {
               <span>游戏结束，剩余：</span>
             } @else {
               <span>当前剩余：</span>
             }
-            <span class="ml-2 font-bold text-[#4AA8A8] md:ml-3">{{
-              remain()
-            }}</span>
+            <span
+              class="ml-2 font-bold text-[#4AA8A8] md:ml-3 dark:text-[#88C4C4]"
+              >{{ remain() }}</span
+            >
           </div>
         </div>
       </div>
 
       <!-- 玩法说明卡片（移动端显示在下方） -->
       <div
-        class="hover:shadow-3xl order-2 w-full rounded-2xl bg-white p-4 shadow-2xl transition-all duration-300 md:p-6 lg:order-1 lg:w-1/4"
-        style="background: linear-gradient(150deg, #f0f7f7 0%, #ffffff 100%)"
+        class="hover:shadow-3xl order-2 w-full rounded-2xl bg-white p-4 shadow-2xl transition-all duration-300 md:p-6 lg:order-1 lg:w-1/4 dark:bg-gray-700"
       >
         <div class="flex h-full flex-col justify-between">
-          <div class="mb-3 text-lg font-bold text-[#4AA8A8] md:mb-4 md:text-xl">
+          <div
+            class="mb-3 text-lg font-bold text-[#4AA8A8] md:mb-4 md:text-xl dark:text-[#88C4C4]"
+          >
             游戏玩法
           </div>
           <div
-            class="h-full space-y-3 pt-5 text-sm leading-relaxed text-[#2A4E6E] md:space-y-4 md:text-base"
+            class="h-full space-y-3 pt-5 text-sm leading-relaxed text-[#2A4E6E] md:space-y-4 md:text-base dark:text-gray-200"
           >
             <div>1. 选择有相邻棋子的棋子进行跳跃</div>
             <div>2. 点击棋子后选择目标空位完成跳跃</div>
@@ -82,7 +83,7 @@
           </div>
           <button
             (click)="resetGame()"
-            class="mt-6 cursor-pointer rounded-full bg-[#4AA8A8] px-6 py-3 text-sm font-medium text-white transition-all hover:bg-[#2A4E6E] hover:shadow-md md:mt-8 md:px-8 md:py-4 md:text-base"
+            class="mt-6 cursor-pointer rounded-full bg-[#4AA8A8] px-6 py-3 text-sm font-medium text-white transition-all hover:bg-[#2A4E6E] hover:shadow-md md:mt-8 md:px-8 md:py-4 md:text-base dark:bg-[#327070] dark:hover:bg-[#4AA8A8]"
           >
             重新开始
           </button>
